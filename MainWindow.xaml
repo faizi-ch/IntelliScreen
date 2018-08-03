@@ -1,0 +1,114 @@
+﻿<dx:DXWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:export="clr-namespace:DevExpress.XtraPrinting.Export;assembly=DevExpress.Printing.v17.2.Core"
+        xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+    xmlns:local="clr-namespace:IntelliScreen.Views"
+    
+    x:Class="IntelliScreen.MainWindow"
+        Name="IntelliScreen" Title="IntelliScreen" Height="466.935" Width="803.98" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/IntelliScreen;component/AppIcon.png" WindowStyle="ThreeDBorderWindow" Closing="DXWindow_Closing" Loaded="DXWindow_Loaded" StateChanged="DXWindow_StateChanged">
+
+    <dx:DXWindow.HeaderItems>
+        <local:CustomCheckEditTheme x:Name="ThemeCheckEdit" Height="28" Width="110" EditValueChanged="ThemeCheckEdit_EditValueChanged" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEditTheme Visibility="Hidden" />
+        <local:CustomCheckEdit x:Name="HeaderCheckEdit" Height="28" Width="110" EditValueChanged="HeaderCheckEdit_EditValueChanged" />
+
+    </dx:DXWindow.HeaderItems>
+    <Grid>
+
+
+        <dxdo:DockLayoutManager Name="DockLayoutManager" Margin="0,40,0,0" DockItemClosing="DockLayoutManager_DockItemClosing">
+            <dxdo:LayoutGroup Name="LayoutGroup2">
+                <dxdo:LayoutGroup Name="LayoutGroup1" Orientation="Vertical">
+                    <dxdo:LayoutPanel Caption="Panel1" />
+                    <dxdo:LayoutPanel Caption="Panel2" />
+                </dxdo:LayoutGroup>
+                <dxdo:LayoutPanel Caption="Panel3">
+                </dxdo:LayoutPanel>
+
+            </dxdo:LayoutGroup>
+
+        </dxdo:DockLayoutManager>
+
+        <dxlc:LayoutItem Label="Default Brightness: " Margin="10,-5,0,0">
+            <dxe:TrackBarEdit x:Name="DBrightnessTrackBar" HorizontalAlignment="Left" Height="50" Width="150" Value="50" TickPlacement="None" EditValueChanged="DBrightnessTrackBar_EditValueChanged">
+                <dxe:TrackBarEdit.StyleSettings>
+                    <dxe:TrackBarZoomStyleSettings />
+                </dxe:TrackBarEdit.StyleSettings>
+            </dxe:TrackBarEdit>
+        </dxlc:LayoutItem>
+        <dx:SimpleButton x:Name="Add" Content="Add Program" HorizontalAlignment="Left" Height="29" Margin="370,7,0,0" VerticalAlignment="Top" Width="100" Click="Add_Click" />
+        <dxe:ComboBoxEdit x:Name="ProgramsComboBox" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top" Width="150" Visibility="Hidden" />
+        <dxe:FlyoutControl x:Name="AddFlyout" IsOpen="False" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="270" StaysOpen="True" Margin="262,-5,0,0">
+            <dxlc:LayoutControl ItemSpace="3" Orientation="Vertical" Width="Auto" Height="Auto">
+                <dxlc:LayoutItem Label="SelectProgram: ">
+                    <dx:SimpleButton x:Name="SelectProgram" Content="Select Program" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto" Click="SelectProgram_OnClick" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="Brightness: ">
+                    <dxe:TrackBarEdit x:Name="BrightnessTrackBar" HorizontalAlignment="Left" Height="50" Width="150" Value="50" TickPlacement="None" EditValueChanging="BrightnessTrackBar_EditValueChanging">
+                        <dxe:TrackBarEdit.StyleSettings>
+                            <dxe:TrackBarZoomStyleSettings />
+                        </dxe:TrackBarEdit.StyleSettings>
+                    </dxe:TrackBarEdit>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem>
+                    <dx:SimpleButton x:Name="AddProgramFlyoutButton" Content="Add" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto" Click="AddProgramFlyoutButton_Click" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem>
+                    <dx:SimpleButton x:Name="CancelFlyoutButton" Content="Cancel" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto" Click="CancelFlyoutButton_Click" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutControl>
+        </dxe:FlyoutControl>
+        <dxe:FlyoutControl x:Name="UndoRemovedFlyout" HorizontalAlignment="Left" Height="100" Margin="89,-31,0,0" VerticalAlignment="Top" Width="100" Opacity="0.1" MouseEnter="UndoRemovedFlyout_MouseEnter" MouseLeave="UndoRemovedFlyout_MouseLeave" MouseUp="UndoRemovedFlyout_MouseUp">
+            <dxlc:LayoutItem Label="Restore removed program" Name="FlyoutLabelItem">
+                <dx:SimpleButton x:Name="RestoreButton" Content="Restore" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto" Click="RestoreButton_Click" />
+            </dxlc:LayoutItem>
+        </dxe:FlyoutControl>
+        <dxe:CheckEdit Name="AutoBrightnessToggle" Content="Auto Brightness" HorizontalAlignment="Left" Margin="491,10,0,0" VerticalAlignment="Top" Width="150" EditValueChanged="AutoBrightnessToggle_EditValueChanged" />
+
+
+        <tb:TaskbarIcon Name="TaskbarIcon"
+      IconSource="/NotifyIcon.ico" Visibility="Visible"
+      ToolTipText="IntelliScreen" TrayMouseDoubleClick="TaskbarIcon_OnTrayMouseDoubleClick">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu Name="ContextMenu"
+      Background="Teal" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="280">
+                    <local:CustomCheckEdit x:Name="MainAppCheckMenu" Height="28" Width="110" EditValueChanged="MainAppCheckMenu_EditValueChanged" />
+                    <dxlc:LayoutItem Label="Default Brightness: ">
+                        <dxe:TrackBarEdit x:Name="DBrightnessContextMenu" HorizontalAlignment="Left" Height="20" Width="120" TickPlacement="None" EditValueChanged="DBrightnessContextMenu_EditValueChanged">
+                            <dxe:TrackBarEdit.StyleSettings>
+                                <dxe:TrackBarZoomStyleSettings />
+                            </dxe:TrackBarEdit.StyleSettings>
+                        </dxe:TrackBarEdit>
+                    </dxlc:LayoutItem>
+                    <MenuItem IsCheckable="True" Name="AutoBrightnessContextMenuu">
+                        <MenuItem.Icon>
+                            <Image Source="brightness.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <dxe:CheckEdit Content="Auto Brightness" Name="AutoBrightnessContextMenu" HorizontalAlignment="Center" EditValueChanged="AutoBrightnessContextMenu_EditValueChanged" />
+                    <MenuItem Header="Exit" Name="ExitContextMenuButton" Click="ExitContextMenuButton_Click">
+                        <MenuItem.Icon>
+                            <Image Source="close.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+
+    </Grid>
+
+</dx:DXWindow>
+
